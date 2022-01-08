@@ -17,6 +17,7 @@ from ConfigManager import ConfigManager
 from subWindows import SubWindows
 from entityExcelWrite import EntityExcelWrite
 from CreateTableSQLFileMake import CreateTableSQLFileMake
+from FileOperation import FileOperation
 
 #sg.theme_previewer()
 
@@ -31,6 +32,7 @@ sg.theme('GreenMono')
 settingEntityAccess = SettingEntityAccess()
 entityMasterAccess = EntityMasterAccess()
 columnMasterAccess = ColumnMasterAccess()
+fileOperation = FileOperation()
 entityRead = EntityRead()
 configManager = ConfigManager()
 entityRead = EntityRead()
@@ -193,7 +195,7 @@ def clearEntitySearchItems():
 # + レイアウト設定
 # +-----------------------------------------------------------------------------------+
 # ------ Menu Definition ------ #
-menu_def = [['File', ['Open', ['Folder Open', 'File Open', 'Entity Open'],'Quit']],
+menu_def = [['File', ['Open', ['Folder Open', 'Entity Open'],'Quit']],
             ['Run', ['Reload', ['Reload FolderPath', 'Reload Entity', ],['Reflection',['Setting Reflection', 'Entity Reflection', ]]]],
             ['Help', 'About app...'], ]
 
@@ -313,7 +315,9 @@ t1 = sg.Tab('Entity Master' ,[[sg.Button('Quit',key='Quit'),
              sg.Button('Entity Add',key='-Entity Add-',disabled=True,disabled_button_color=radio_dic['-radio Add-'][2]),
              sg.Button('Entity Del',key='-Entity Del-',disabled=True,disabled_button_color=radio_dic['-radio Del-'][2]),
              sg.Button('CreateSql File',key='-CreateSql File-',disabled=True,disabled_button_color=radio_dic['-radio CreateFile-'][2]),
-             sg.Button('CreateExcel File',key='-CreateExcel File-',disabled=True,disabled_button_color=radio_dic['-radio CreateFile-'][2])],
+             sg.Button('CreateExcel File',key='-CreateExcel File-',disabled=True,disabled_button_color=radio_dic['-radio CreateFile-'][2]),
+             sg.Button('Folder Open',key='-Folder Open-',disabled=False, disabled_button_color=radio_dic['-radio Add-'][2])
+             ],
             getEntityAddItemsLayout(),
             [sg.Button('Entity Reflection',key='-Entity Ref-',disabled=True, disabled_button_color=radio_dic['-radio Add-'][2], pad=((680, 0),(0,0)))]
             ])
@@ -395,6 +399,7 @@ while True:
 
     # 検索
     if event == '-Entity Search-':
+        print('--------Search')
         # 検索項目取得
         type_in=values['-Type Section_Search-']
         section=values['-Entity Section_Search-']
@@ -616,6 +621,9 @@ while True:
     if event == '-Entity Add-':
         print('--------Add')
 
+        if not entityNoMax:
+            entityNoMax = entityMasterAccess.getEntityNoMax()
+
         entityNoMax += 1
 
         # 仮新規登録データを設定
@@ -689,8 +697,8 @@ while True:
 
         if len(indexs) > 0:
 
-            mess = sg.popup_ok_cancel('{}件 仮削除しますがよろしいですか？\n削除確定はReflectionを実施してください。',
-                                        title = 'Confirm Entity Del')
+            mess = sg.popup_ok_cancel('{}件 仮削除しますがよろしいですか？\n削除確定はReflectionを実施してください。'.format(len(indexs)),
+                                        title = 'Confirm...')
             if mess == "OK":
                 # NumPy配列ndarrayにて一括削除
                 del_data_list = np.delete(entityMaster_list, indexs, 0)
@@ -832,6 +840,43 @@ while True:
         # ウィンドウ更新
         window['-Entity Table-'].update(entityMaster_list)
 
+        mess = sg.popup_ok('{}件　反映処理を実施しました。'.format(len(entityMaster_list)),
+                                                                title = 'Complete Reflection...')
+
+    if values['menu1'] == "Folder Open" or event == '-Folder Open-':
+        print('--------Folder Open')
+        ragio_open = values['-radio Open-']
+
+        if ragio_open:
+            num = 0
+            open_flg = False
+            for index,data in enumerate(entityMaster_list):
+                if data[0] == '☑':
+                    num = index
+                    open_flg = True
+
+            if open_flg:
+
+                # ファイルフルパスを取得
+                file_full_path = entityMaster_list[num][6]
+                # フルパスよりディレクトリパスを取得
+                dir_path = fileOperation.getFolderPath(file_full_path)
+                # フォルダOPEN確認
+                mess = sg.popup_ok_cancel('フォルダ：{}を開きますか？'.format(dir_path),title = 'Confirm...')
+                if mess == "OK":
+                    print("---選択行:{}----".format(entityMaster_list[num][1]))
+                    # フォルダOPEN処理
+                    fileOperation.folderOpen(dir_path)
+
+            # 行未選択の場合、選択メッセージを表示
+            else:
+                sg.popup_error('行を選択してください。',title = 'error')
+
+        # 行未選択の場合、選択メッセージを表示
+        else:
+            sg.popup_error('Radio Openを選択してください。',title = 'error')
+
+
     # カラムTable選択イベント markのチェック更新処理を実施
     if event == '-Entity Table-':
         # Table　クリックイベントをハンドリング後、選択行を取得するために
@@ -883,6 +928,7 @@ while True:
             window['-Entity Del-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateSql File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateExcel File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
+            window['-Folder Open-'].update(disabled=False, disabled_button_color=(None,None))
 
             window['-Entity Ref-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
 
@@ -918,6 +964,7 @@ while True:
             window['-Entity Del-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateSql File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateExcel File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
+            window['-Folder Open-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
 
             window['-Entity Ref-'].update(disabled=False, disabled_button_color=(None,None))
 
@@ -953,6 +1000,7 @@ while True:
             window['-Entity Del-'].update(disabled=False, disabled_button_color=(None,None))
             window['-CreateSql File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateExcel File-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
+            window['-Folder Open-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
 
             window['-Entity Ref-'].update(disabled=False, disabled_button_color=(None,None))
 
@@ -982,6 +1030,7 @@ while True:
             window['-Entity Del-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
             window['-CreateSql File-'].update(disabled=False, disabled_button_color=(None,None))
             window['-CreateExcel File-'].update(disabled=False, disabled_button_color=(None,None))
+            window['-Folder Open-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
 
             window['-Entity Ref-'].update(disabled=True, disabled_button_color=('#d3d3d3','#d3d3d3'))
 

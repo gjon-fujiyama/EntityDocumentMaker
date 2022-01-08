@@ -185,7 +185,7 @@ class EntityMasterAccess():
                 "FROM ENTITY_MASTER em "
 
         if column_cd or column_name:
-            text = "INNER JOIN COLUMN_MASTER cm " +\
+            text += "INNER JOIN COLUMN_MASTER cm " +\
                     "ON em.entity_no = cm.entity_no "
 
         L=[]
