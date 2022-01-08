@@ -37,9 +37,10 @@ python .\EntityDocumentMaker.py
 # Note
 
 ※注意点  
-・EntityDocumentMaker.pyと同階層に以下、設定ファイルとエンティティ定義書テンプレートフォルダは配置してください。  
+・EntityDocumentMaker.pyと同階層に以下を配置してください。  
 　・config.ini  
-　・EntityTemplateExcel  
+　・EntityTemplateExcelフォルダ  
+　　（同フォルダには、エンティティ定義書出力に必要なテンプレートファイルがあります）  
 
 ・以下のフォルダは、デモ用のエンティティ定義書のサンプルです。  
 　・(〇〇)エンティティ定義書フォルダ配下のエンティティ定義書  
