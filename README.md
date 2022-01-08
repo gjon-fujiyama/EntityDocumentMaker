@@ -5,7 +5,7 @@ After importing the entity definition (Excel file), store the data in sqlite3.
 
 # DEMO
 
-## 準備中
+## 準備中  
 
 # Features
 
@@ -54,7 +54,7 @@ python .\EntityDocumentMaker.py
 
 # License
 
-"hoge" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+"EntityDocumentMaker" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).  
 
 ## ////改修履歴/////////  
 2022/01/03 Version 1.00  
