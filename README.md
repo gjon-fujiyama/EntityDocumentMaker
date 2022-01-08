@@ -15,7 +15,7 @@ After importing the entity definition (Excel file), store the data in sqlite3.
 
 # Requirement
 
-* huga 3.5.2  
+* python 3.10.0  
 * numpy 1.21.5  
 * openpyxl 3.0.9  
 * SQLAlchemy 1.4.26  
