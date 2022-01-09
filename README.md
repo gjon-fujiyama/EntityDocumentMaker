@@ -12,6 +12,8 @@ After importing the entity definition (Excel file), store the data in sqlite3.
 1)データベース エンティティ定義書(Excelファイル)を読み込み、SQLite3に登録できます。  
 2)登録データをTabelとColumnで管理（検索、登録、削除、更新）が出来ます。  
 3)登録データを元にエンティティ定義書とCreate Table文を作成します。  
+4)Python環境を構築せずに実行する事が出来ます。  
+　・EntityDocumentMaker.exeをクリックしてください！
 
 # Requirement
 
@@ -24,28 +26,42 @@ After importing the entity definition (Excel file), store the data in sqlite3.
 
 # Usage
 
-※リソース起動の場合は、以下を行ってください。  
+１）リソース起動の場合は、以下を行ってください。  
 
-1)任意の場所にEntityDocumentMakerフォルダを配置します。  
-
-2)以下、コマンドを実行して下さい。  
+　1)任意の場所にEntityDocumentMakerフォルダを配置します。  
+　  
+　2)以下、コマンドを実行して下さい。  
 ```bash
 cd [任意の場所]/EntityDocumentMaker
 python .\EntityDocumentMaker.py
 ```
-
+　  
+２）Python環境を構築せずに実行する場合  
+　  
+　1)下記のファイルとフォルダをEntityDocumentMaker.exeと同階層に配置してください。  
+　　・config.ini  
+　　・EntityTemplateExcelフォルダ  
+　  
+　2)[任意の場所]\EntityDocumentMaker.exeをクリックしてください。  
+　  
+　■exeファイル作成は、以下コマンド実行  
+```bash
+cd [任意の場所]/EntityDocumentMaker
+pyinstaller --onefile --icon=FjiYama.ico .\EntityDocumentMaker.py --noconsole
+```
+　  
 # Note
-
-※注意点  
+　  
+※exeファイル作成の場合の注意点  
 ・EntityDocumentMaker.pyと同階層に以下を配置してください。  
 　・config.ini  
 　・EntityTemplateExcelフォルダ  
 　　（同フォルダには、エンティティ定義書出力に必要なテンプレートファイルがあります）  
-
+　  
 ・以下のフォルダは、デモ用のエンティティ定義書のサンプルです。  
 　・(〇〇)エンティティ定義書フォルダ配下のエンティティ定義書  
 　・(標準)エンティティ定義書フォルダ配下のエンティティ定義書  
-
+　  
 # Author
 
 * 作成者 G-jon Fujiyama
@@ -64,3 +80,5 @@ python .\EntityDocumentMaker.py
 2033/01/09  
 ・DEMO動画 COMMIT    
 ・取込条件で取込対象拡張子,ファイル接頭辞を追加修正    
+・EntityDocumentMaker.exeを配置  
+・EntityDocumentMaker\EntityDocumentMaker.specを配置  
