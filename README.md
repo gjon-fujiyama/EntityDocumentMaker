@@ -39,7 +39,7 @@ python .\EntityDocumentMaker.py
 ２）Python環境を構築せずに実行する場合  
 　  
 　1)下記のファイルとフォルダをEntityDocumentMaker.exeと同階層に配置してください。  
-　　・FjiYama.ico
+　　・FjiYama.ico  
 　　・config.ini  
 　　・EntityTemplateExcelフォルダ  
 　  
@@ -55,7 +55,7 @@ pyinstaller --onefile --icon=FjiYama.ico .\EntityDocumentMaker.py --noconsole
 　  
 ※exeファイル作成の場合の注意点  
 ・EntityDocumentMaker.pyと同階層に以下を配置してください。  
-　・FjiYama.ico
+　・FjiYama.ico  
 　・config.ini  
 　・EntityTemplateExcelフォルダ  
 　　（同フォルダには、エンティティ定義書出力に必要なテンプレートファイルがあります）  
