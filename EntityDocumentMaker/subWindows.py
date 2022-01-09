@@ -2,7 +2,6 @@
 import PySimpleGUI as sg
 import re
 import numpy as np
-import threading
 from ColumnMasterAccess import ColumnMasterAccess
 
 # +-----------------------------------------------------------------------------------+

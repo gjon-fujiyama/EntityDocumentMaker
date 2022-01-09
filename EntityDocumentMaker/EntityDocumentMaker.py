@@ -7,7 +7,6 @@ import PySimpleGUI as sg
 import os
 import re
 import numpy as np
-# import threading
 
 from SettingEntityAccess import SettingEntityAccess
 from EntityMasterAccess import EntityMasterAccess

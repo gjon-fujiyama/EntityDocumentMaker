@@ -4,7 +4,6 @@ import glob
 import subprocess
 import shutil
 
-
 class FileOperation():
 
     # ファイルを開く
