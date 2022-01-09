@@ -114,3 +114,11 @@ class ConfigManager():
     # エンティティ定義書ファイル出力先フォルダパス取得
     def getEntityExcelOutputPath(self):
         return self.systemPath.get('entity_excel_output_path')
+
+    # エンティティ定義書 取込ターゲット拡張子
+    def getTargetExtension(self):
+        return self.systemPath.get('target_extension')
+
+    # エンティティ定義書　取込ファイル接頭辞
+    def getTargetFilenamePrefix(self):
+        return self.systemPath.get('target_filename_prefix')

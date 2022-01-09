@@ -62,4 +62,5 @@ python .\EntityDocumentMaker.py
 2022/01/08  
 ・FolderOpnen機能追加  
 2033/01/09  
-・DEMO動画 COMMIT  
+・DEMO動画 COMMIT    
+・取込条件で取込対象拡張子,ファイル接頭辞を追加修正    

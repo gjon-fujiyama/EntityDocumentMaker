@@ -20,6 +20,8 @@ class EntityRead(): #クラス名
     # インスタンス化メソッド
     def __init__(self):
         self.configManager = ConfigManager()
+        self.target_extension = self.configManager.getTargetExtension()
+        self.target_filename_prefix = self.configManager.getTargetFilenamePrefix()
 
     # メイン処理
     def startRead(self):
@@ -45,17 +47,22 @@ class EntityRead(): #クラス名
             # 取得ファイル名分反復処理
             for filename in files_file:
 
-                # フルパス構築
-                full_path = '{}\{}'.format(path, filename)
+                # 対象拡張子のみ取込み
+                if self.target_extension in filename:
+                    # 対象ファイル接頭辞のもののみ取込み
+                    if self.target_filename_prefix in filename:
 
-                # print('full_path:{}'.format(full_path))
+                        # フルパス構築
+                        full_path = '{}\{}'.format(path, filename)
 
-                # エンティティ定義書読み取り処理
-                self.entityRead(full_path=full_path,
-                                entityNo=entityNo,
-                                type_section=settingEntity.type_section,
-                                type_section_name=settingEntity.type_section_name)
-                entityNo += 1
+                        # print('full_path:{}'.format(full_path))
+
+                        # エンティティ定義書読み取り処理
+                        self.entityRead(full_path=full_path,
+                                        entityNo=entityNo,
+                                        type_section=settingEntity.type_section,
+                                        type_section_name=settingEntity.type_section_name)
+                        entityNo += 1
 
         return entityNo;
 
@@ -101,20 +108,6 @@ class EntityRead(): #クラス名
                                     register_cd="EntityRead",
                                     update_date=now,
                                     update_cd="EntityRead")
-
-        # エンティティマスタ設定出力
-        # print('EntityMaster =>>> {}'.format(entityMaster))
-
-        # データベースからENTITYコードが一致するデータを取得
-        # entityMaster_check = db.session.query(EntityMaster).filter(EntityMaster.entity_cd == entityMaster.entity_cd).first()
-
-        # 登録済みENTITY情報とCOLUMN情報は、一旦削除
-        # if entityMaster_check!=None and entityMaster_check.entity_cd!=None:
-            # print('EntityMaster Return=>>> entity_cd:{}, entity_name:{}'.format(entityMaster_check.entity_cd, entityMaster_check.entity_name))
-            # db.session.query(EntityMaster).filter(EntityMaster.entity_cd == entityMaster_check.entity_cd).delete()  # 削除
-            # db.session.query(ColumnMaster).filter(ColumnMaster.entity_cd == entityMaster_check.entity_cd).delete()  # 削除
-            # db.session.commit()  # データベースコミット
-            # return
 
         # エンティティマスタ　データ登録
         db.session.add(entityMaster)  # 追加
