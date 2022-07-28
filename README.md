@@ -72,7 +72,7 @@ pyinstaller --onefile --icon=FjiYama.ico .\EntityDocumentMaker.py --noconsole
 # Author
 
 * 作成者 G-jon Fujiyama
-* 所属 Script Edit.
+* 所属 X
 * E-mail None
 
 # License
